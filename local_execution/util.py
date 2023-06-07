@@ -16,7 +16,7 @@ class PostgresUtils:
         self.user = user,
         self.pwd = pwd,
         self.conn = psycopg2.connect(
-            host="database",
+            host="localhost",
             database=self.db,
             user=self.user,
             password=self.pwd)

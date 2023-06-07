@@ -1,0 +1,31 @@
+services:
+
+#  Service to setup the postgres database
+  database:
+    image: postgres
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: 'docker'
+      POSTGRES_PASSWORD: 'docker'
+      POSTGRES_DB: 'test_db'
+
+# An attempt to check if just a python script will work instead of flask
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    command: python app.py
+
+# The service to start the flask server and run
+  flaskapp:
+    build: .
+    restart: always
+    depends_on:
+      - database
+    ports:
+      - "5000:5000"
+
+

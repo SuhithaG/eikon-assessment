@@ -4,6 +4,7 @@ from datetime import datetime
 from collections import Counter
 from flask import Flask
 import util
+import argparse
 
 app = Flask(__name__)
 
@@ -81,13 +82,16 @@ def etl(args):
 
 # This functions is to get the parameters needed for this application
 def get_params():
-    # args = {"data_path": os.getenv('DATA_DIR_PATH'), "postgres_user": os.environ.get('POSTGRES_USER'),
-    #         "postgres_pwd": os.getenv('POSTGRES_PWD'), "postgres_db": os.getenv('POSTGRES_DB'),
-    #         "results_table": os.getenv('RESULTS_TABLE')}
 
-    args = {"data_path": r'data', "postgres_user": 'docker',
-            "postgres_pwd": "docker", "postgres_db": "test_db",
-            "results_table": "results"}
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--data_path", default='data')
+    parser.add_argument("--postgres_user", required=True)
+    parser.add_argument("--postgres_pwd", required=True)
+    parser.add_argument("--postgres_db", required=True)
+    parser.add_argument("--results_table", default='results')
+
+    args = parser.parse_args()
 
     return args
 
