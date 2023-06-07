@@ -68,7 +68,7 @@ def get_params():
     #         "postgres_pwd": os.getenv('POSTGRES_PWD'), "postgres_db": os.getenv('POSTGRES_DB'),
     #         "results_table": os.getenv('RESULTS_TABLE')}
 
-    args = {"data_path": r'data', "postgres_user": 'docker',
+    args = {"data_path": os.getenv('DATA_DIR_PATH'), "postgres_user": 'docker',
             "postgres_pwd": "docker", "postgres_db": "exampledb",
             "results_table": "results"}
 
@@ -82,7 +82,7 @@ def trigger_etl():
     print("printing args: ", args)
     # Trigger your ETL process here
     etl(args)
-    return 'hello world!'
+    return args['data_path']
 
 
 if __name__ == "__main__":
